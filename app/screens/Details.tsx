@@ -4,7 +4,7 @@ import React from 'react'
 const Logout = () => {
     return (
         <View>
-            <Text>Logout
+            <Text>Details
             </Text>
         </View>
     )

@@ -6,7 +6,7 @@ import Home from './app/screens/Home';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 import { FIREBASE_AUTH } from './firebaseConfig';
-import Logout from './app/screens/logout';
+import Details from './app/screens/Details';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +16,7 @@ function InsideLayout() {
   return (
     <InsideStack.Navigator>
       <InsideStack.Screen name="Home" component={Home} />
-      <InsideStack.Screen name="Logout" component={Logout} />
+      <InsideStack.Screen name="Details" component={Details} />
     </InsideStack.Navigator>
   );
 }
