@@ -13,10 +13,10 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      alert('Check your emails!');
+      // console.log(response);
+      // alert('Check your emails!');
     } catch (error: any) {
-      console.log(error);
+      //  console.log(error);
       alert('Sign in failed: ' + error.message);
     } finally {
       setLoading(false)
@@ -27,10 +27,10 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      alert('Check your emails!');
+      // console.log(response);
+      // alert('Check your emails!');
     } catch (error: any) {
-      console.log(error);
+      // console.log(error);
       alert('Sign in failed: ' + error.message);
     } finally {
       setLoading(false)
