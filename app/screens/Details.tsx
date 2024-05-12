@@ -14,6 +14,7 @@ const Details = () => {
         const fetchData = () => {
             onValue(dataRef, (snapshot) => {
                 const data = snapshot.val();
+                console.log("Fetched data:", data); // Log the fetched data
                 if (data) {
                     setFlameStatus(data.FlameStatus);
                     setTemperature(data.Temperature);
@@ -35,17 +36,17 @@ const Details = () => {
     return (
         <View style={styles.container}>
             <View style={styles.tempWrapper}>
-                <Text style={styles.text}>{temperature !== null ? `${temperature}°` : 'Loading...'}</Text>
+                <Text style={styles.text}>{temperature !== null ? `${temperature.value}°` : 'Loading...'}</Text>
             </View>
             <View style={styles.data}>
                 <View style={styles.spacer}></View>
                 <View style={styles.dataWrapper}>
                     <View style={styles.humid}>
-                        <Text style={styles.dataText}>{humidity !== null ? `${humidity}%` : 'Loading...'}</Text>
+                        <Text style={styles.dataText}>{humidity !== null ? `${humidity.value}%` : 'Loading...'}</Text>
                         <Text style={styles.title}>Humidity</Text>
                     </View>
                     <View style={styles.pressure}>
-                        <Text style={styles.dataText}>{flameStatus !== null ? flameStatus : 'Loading...'}</Text>
+                        <Text style={styles.dataText}>{flameStatus !== null ? flameStatus.value : 'Loading...'}</Text>
                         <Text style={styles.title}>Flame Status</Text>
                     </View>
                 </View>
