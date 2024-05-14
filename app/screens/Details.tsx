@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { db } from '../../firebaseConfig';
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, set } from 'firebase/database';
+import ToggleSwitch from 'toggle-switch-react-native';
 
 const Details = () => {
     const [flameStatus, setFlameStatus] = useState(null);
     const [temperature, setTemperature] = useState(null);
     const [humidity, setHumidity] = useState(null);
+    const [isLed1On, setIsLed1On] = useState(false);
+    const [isLed2On, setIsLed2On] = useState(false);
+    const [isLed3On, setIsLed3On] = useState(false);
 
     useEffect(() => {
         const dataRef = ref(db);
@@ -33,10 +37,56 @@ const Details = () => {
         };
     }, []);
 
+    const handleToggleLed1 = (isOn) => {
+        setIsLed1On(isOn);
+        const newValue = isOn ? 1 : 0;
+        set(ref(db, 'LED1'), newValue);
+    };
+
+    const handleToggleLed2 = (isOn) => {
+        setIsLed2On(isOn);
+        const newValue = isOn ? 1 : 0;
+        set(ref(db, 'LED2'), newValue);
+    };
+    const handleToggleLed3 = (isOn) => {
+        setIsLed3On(isOn);
+        const newValue = isOn ? 1 : 0;
+        set(ref(db, 'Door'), newValue);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.tempWrapper}>
                 <Text style={styles.text}>{temperature !== null ? `${temperature.value}°` : 'Loading...'}</Text>
+            </View>
+            <View>
+                <ToggleSwitch
+                    isOn={isLed1On}
+                    onColor={isLed1On ? "green" : "red"}
+                    offColor={isLed1On ? "green" : "red"}
+                    label={isLed1On ? "Led1 ON" : "Led1 OFF"}
+                    labelStyle={{ color: isLed1On ? "black" : "black", fontWeight: "900" }}
+                    size="large"
+                    onToggle={handleToggleLed1}
+                />
+                <ToggleSwitch
+                    isOn={isLed2On}
+                    onColor={isLed2On ? "green" : "red"}
+                    offColor={isLed2On ? "green" : "red"}
+                    label={isLed2On ? "Led2 ON" : "Led2 OFF"}
+                    labelStyle={{ color: isLed2On ? "black" : "black", fontWeight: "900" }}
+                    size="large"
+                    onToggle={handleToggleLed2}
+                />
+                <ToggleSwitch
+                    isOn={isLed3On}
+                    onColor={isLed3On ? "green" : "red"}
+                    offColor={isLed3On ? "green" : "red"}
+                    label={isLed2On ? "Door ON" : "Door OFF"}
+                    labelStyle={{ color: isLed3On ? "black" : "black", fontWeight: "900" }}
+                    size="large"
+                    onToggle={handleToggleLed3}
+                />
             </View>
             <View style={styles.data}>
                 <View style={styles.spacer}></View>

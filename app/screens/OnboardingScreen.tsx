@@ -1,16 +1,26 @@
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-import React from 'react';
 import Onboarding from 'react-native-onboarding-swiper';
-import LottieView from 'lottie-react-native';
+import Lottie from 'lottie-react-native';
 import { useNavigation } from '@react-navigation/native';
+
 
 const { width } = Dimensions.get('window');
 
-export default function OnboardingScreen() {
+const OnboardingScreen: React.FC = () => {
     const navigation = useNavigation();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setIsLoading(false); // Simulating initialization completion
+    }, []);
 
     const handleDone = () => {
         navigation.navigate('Login');
+    };
+
+    if (isLoading) {
+        return null; // or render a loading indicator
     }
 
     return (
@@ -23,12 +33,13 @@ export default function OnboardingScreen() {
                     {
                         backgroundColor: '#a7f3d0',
                         image: (
-                            <View style={styles.lottieContainer}>
-                                <LottieView
+                            <View style={styles.LottieView}>
+                                <Lottie
                                     source={require('../../assets/annimation/Animation1.json')}
                                     autoPlay
                                     loop
                                     style={styles.lottie}
+
                                 />
                             </View>
                         ),
@@ -38,8 +49,8 @@ export default function OnboardingScreen() {
                     {
                         backgroundColor: '#fef3c7',
                         image: (
-                            <View style={styles.lottieContainer}>
-                                <LottieView
+                            <View style={styles.LottieView}>
+                                <Lottie
                                     source={require('../../assets/annimation/Animation2.json')}
                                     autoPlay
                                     loop
@@ -53,8 +64,8 @@ export default function OnboardingScreen() {
                     {
                         backgroundColor: '#a78bfa',
                         image: (
-                            <View style={styles.lottieContainer}>
-                                <LottieView
+                            <View style={styles.LottieView}>
+                                <Lottie
                                     source={require('../../assets/annimation/Animation3.json')}
                                     autoPlay
                                     loop
@@ -69,20 +80,26 @@ export default function OnboardingScreen() {
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+
     },
     lottieContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
+    LottieView: {
+        width: width * 0.9,
+        height: width,
+    },
     lottie: {
         width: width * 0.9,
-        height: width * 0.9,
+        height: width,
     },
 });
+
+export default OnboardingScreen;
