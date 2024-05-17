@@ -11,6 +11,7 @@ import Profile from '../screens/Profile';
 import Header from '../Components/Header';
 import Slider from '../Components/Slider';
 import Categories from '../Components/Categories';
+import SubHeadung from '../Components/SubHeadung';
 
 interface RouterProps {
   navigation: NavigationProp<any, any>;
@@ -36,12 +37,14 @@ const Home = ({ navigation }: RouterProps) => {
 
 
     <View style={{ padding: 10, margin: 10, marginTop: 50 }}>
-      <Header navigation={undefined} />
+      <Header />
       {/* <Text>Hello!</Text> */}
 
       <Slider />
 
       <Categories />
+
+      <SubHeadung />
 
       <Button onPress={() => navigation.navigate('Details')} title="Details page" />
       <Button onPress={handleLogout} title="Logout" />

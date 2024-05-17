@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import { db } from '../../firebaseConfig';
 import { ref, onValue, set } from 'firebase/database';
 import ToggleSwitch from 'toggle-switch-react-native';
+import Colors from '../../assets/Shared/Colors';
 
 const Details = () => {
     const [flameStatus, setFlameStatus] = useState(null);
@@ -55,20 +56,56 @@ const Details = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.tempWrapper}>
-                <Text style={styles.text}>{temperature !== null ? `${temperature.value}°` : 'Loading...'}</Text>
+        <SafeAreaView style={styles.container}>
+            {/* <View style={styles.tempWrapper}> */}
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ marginTop: 30 }}>
+                    <Image source={{ uri: 'https://nashvillesevereweather.com/wp-content/uploads/2020/01/19_mostlysunny.gif' }}
+                        style={{
+                            width: 160,
+                            height: 160,
+
+                        }}
+                    />
+                </View>
+
+                <View>
+                    <Text style={styles.text}>{temperature !== null ? `${temperature.value}°` : 'Loading...'}</Text>
+                </View>
+
             </View>
-            <View>
-                <ToggleSwitch
-                    isOn={isLed1On}
-                    onColor={isLed1On ? "green" : "red"}
-                    offColor={isLed1On ? "green" : "red"}
-                    label={isLed1On ? "Led1 ON" : "Led1 OFF"}
-                    labelStyle={{ color: isLed1On ? "black" : "black", fontWeight: "900" }}
-                    size="large"
-                    onToggle={handleToggleLed1}
-                />
+
+
+
+
+
+            <View style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+            }}>
+                <View>
+                    <Text>Your Rooms</Text>
+                    <Text>+ Add</Text>
+                </View>
+
+                <View style={{
+                    backgroundColor: Colors.primary,
+                    width: 370,
+                    height: 100,
+                    borderRadius: 12
+                }}>
+                    <ToggleSwitch
+                        isOn={isLed1On}
+                        onColor={isLed1On ? "green" : "red"}
+                        offColor={isLed1On ? "green" : "red"}
+                        //  label={isLed1On ? "Led1 ON" : "Led1 OFF"}
+                        labelStyle={{ color: isLed1On ? "black" : "black", fontWeight: "900" }}
+                        size="small"
+                        onToggle={handleToggleLed1}
+                    />
+                </View>
+
                 <ToggleSwitch
                     isOn={isLed2On}
                     onColor={isLed2On ? "green" : "red"}
@@ -88,6 +125,9 @@ const Details = () => {
                     onToggle={handleToggleLed3}
                 />
             </View>
+
+
+
             <View style={styles.data}>
                 <View style={styles.spacer}></View>
                 <View style={styles.dataWrapper}>
@@ -101,7 +141,7 @@ const Details = () => {
                     </View>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -110,16 +150,15 @@ export default Details;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        padding: 100,
         backgroundColor: 'grey'
     },
     tempWrapper: {
-        flex: 1,
+        display: 'flex',
         justifyContent: "center",
     },
     text: {
-        fontSize: 150,
+        fontSize: 70,
         fontWeight: "100",
         textAlign: "right",
         color: "white",
