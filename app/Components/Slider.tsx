@@ -6,13 +6,13 @@ export default function Slider() {
         {
             id: 1,
             name: 'Home',
-            imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwXs5ngv6cMdeN_Gpj9T86UE6F_PvH18ZejLQ_yY3G-351CAet8l1L_0IJPxEmrD2f4T8&usqp=CAU'
+            imageUrl: 'https://iotbusinessnews.com/WordPress/wp-content/uploads/2023/01/iot-for-smart-homes.jpg'
         },
         {
             id: 2,
             name: 'Room',
-            imageUrl: 'https://rnb.scene7.com/is/image/roomandboard/homepageHero_freshFinds_1920?size=2400,2400&scl=1'
-        }
+            imageUrl: 'https://cdn.builtin.com/cdn-cgi/image/f=auto,fit=cover,w=1200,h=635,q=80/https://builtin.com/sites/www.builtin.com/files/2023-06/smart%20home%20technology.jpg'
+        },
     ]
 
     return (
