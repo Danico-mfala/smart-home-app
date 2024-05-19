@@ -1,15 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, Image, Linking } from 'react-native';
 import { db } from '../../firebaseConfig';
 import { ref, onValue, set } from 'firebase/database';
 import ToggleSwitch from 'toggle-switch-react-native';
 import Colors from '../../assets/Shared/Colors';
-import FireAlertModal from '../Components/FireAlertModal'; // Make sure to update the path according to your project structure
+import FireAlertModal from '../Components/FireAlertModal';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Octicons from '@expo/vector-icons/Octicons';
+
+interface FirebaseData {
+    FlameStatus: { value: string };
+    Temperature: { value: number };
+    Humidity: { value: number };
+    LED1: number;
+    LED2: number;
+    Door: number;
+}
+
+interface ControlProps {
+    isOn: boolean;
+    onToggle: (isOn: boolean) => void;
+    imageUri: string;
+    label: string;
+    backgroundColor: string;
+}
 
 const Details = () => {
-    const [flameStatus, setFlameStatus] = useState(null);
-    const [temperature, setTemperature] = useState(null);
-    const [humidity, setHumidity] = useState(null);
+    const [flameStatus, setFlameStatus] = useState<{ value: string } | null>(null);
+    const [temperature, setTemperature] = useState<{ value: number } | null>(null);
+    const [humidity, setHumidity] = useState<{ value: number } | null>(null);
     const [isLed1On, setIsLed1On] = useState(false);
     const [isLed2On, setIsLed2On] = useState(false);
     const [isLed3On, setIsLed3On] = useState(false);
@@ -20,12 +39,15 @@ const Details = () => {
 
         const fetchData = () => {
             onValue(dataRef, (snapshot) => {
-                const data = snapshot.val();
+                const data = snapshot.val() as FirebaseData; // Cast data to FirebaseData
                 console.log("Fetched data:", data); // Log the fetched data
                 if (data) {
                     setFlameStatus(data.FlameStatus);
                     setTemperature(data.Temperature);
                     setHumidity(data.Humidity);
+                    setIsLed1On(data.LED1 === 1);
+                    setIsLed2On(data.LED2 === 1);
+                    setIsLed3On(data.Door === 1);
 
                     // Check if flame status is detected
                     if (data.FlameStatus !== null && data.FlameStatus.value === 'Detected') {
@@ -45,19 +67,20 @@ const Details = () => {
         };
     }, []);
 
-    const handleToggleLed1 = (isOn) => {
+
+    const handleToggleLed1 = (isOn: boolean) => {
         setIsLed1On(isOn);
         const newValue = isOn ? 1 : 0;
         set(ref(db, 'LED1'), newValue);
     };
 
-    const handleToggleLed2 = (isOn) => {
+    const handleToggleLed2 = (isOn: boolean) => {
         setIsLed2On(isOn);
         const newValue = isOn ? 1 : 0;
         set(ref(db, 'LED2'), newValue);
     };
 
-    const handleToggleLed3 = (isOn) => {
+    const handleToggleLed3 = (isOn: boolean) => {
         setIsLed3On(isOn);
         const newValue = isOn ? 1 : 0;
         set(ref(db, 'Door'), newValue);
@@ -99,7 +122,7 @@ const Details = () => {
                     <View style={{ marginTop: 10 }}>
                         <View style={styles.infoRow}>
                             <Text style={styles.title}>
-                                Humidity :
+                                Humidity :  <Ionicons name='water-outline' size={14} color={Colors.white} />
                             </Text>
                             <Text style={styles.title}>
                                 {humidity !== null ? `${humidity.value}%`
@@ -109,7 +132,7 @@ const Details = () => {
                         </View>
                         <View style={styles.infoRow}>
                             <Text style={styles.title}>
-                                Flame Status
+                                Fire House:
                             </Text>
                             <Text style={styles.title}>
                                 {flameStatus !== null ? flameStatus.value
@@ -122,7 +145,7 @@ const Details = () => {
                 </View>
                 <View style={styles.imageContainer}>
                     <Image
-                        source={{ uri: 'https://nashvillesevereweather.com/wp-content/uploads/2020/01/19_mostlysunny.gif' }}
+                        source={{ uri: 'https://media.baamboozle.com/uploads/images/451679/1644391448_7750.gif' }}
                         style={styles.weatherImage}
                     />
                 </View>
@@ -135,21 +158,21 @@ const Details = () => {
                     isOn={isLed1On}
                     onToggle={handleToggleLed1}
                     imageUri='https://png.pngtree.com/png-vector/20230823/ourmid/pngtree-living-room-icon-with-chair-and-a-plant-vector-png-image_6857390.png'
-                    label='Bed Room 1'
-                    backgroundColor='#FFCCCC'
+                    label='  Smart Lights'
+                    backgroundColor='#E1AFD1'
                 />
                 <Control
                     isOn={isLed2On}
                     onToggle={handleToggleLed2}
                     imageUri='https://as2.ftcdn.net/v2/jpg/03/27/42/59/1000_F_327425974_RXiDtQXQcIOOcTzqugp761O6Ke3237JK.jpg'
-                    label='Living Room 1'
-                    backgroundColor='#FFCCCC'
+                    label='  Smart Lights'
+                    backgroundColor='#4CCD99'
                 />
                 <Control
                     isOn={isLed3On}
                     onToggle={handleToggleLed3}
                     imageUri='https://us.123rf.com/450wm/pixelalex/pixelalex1708/pixelalex170800023/84176983-garage-flat-line-icon.jpg?ver=6'
-                    label='Garage Door'
+                    label='  Smart Door'
                     backgroundColor='#FFCCCC'
                 />
             </View>
@@ -162,21 +185,33 @@ const Details = () => {
     );
 };
 
-const Control = ({ isOn, onToggle, imageUri, label, backgroundColor }) => (
+const Control: FC<ControlProps> = ({ isOn, onToggle, imageUri, label, backgroundColor }) => (
     <View style={[styles.control, { backgroundColor }]}>
         <Image
             source={{ uri: imageUri }}
             style={styles.controlImage}
         />
-        <Text style={styles.dataText}>{label}</Text>
+        <View>
+            <Text style={styles.dataText}>
+                <Octicons name='light-bulb' size={20} color={Colors.white} />
+                {label}
+            </Text>
+
+            <Text>
+                <Ionicons name='water-outline' size={14} color={Colors.white} />
+                Living Room
+            </Text>
+        </View>
+
         <ToggleSwitch
             isOn={isOn}
             onColor={isOn ? "green" : "red"}
             offColor={isOn ? "green" : "red"}
-            size="medium"
+            size="small"
             onToggle={onToggle}
         />
     </View>
+
 );
 
 export default Details;
@@ -203,7 +238,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 390,
         height: 190,
-        backgroundImage: 'https://i0.wp.com/picjumbo.com/wp-content/uploads/sunset-and-golden-clouds-above-the-sea-free-photo.jpg?w=600&quality=80',
+        backgroundColor: '#5AB2FF',
+
         borderRadius: 10,
         marginTop: 20,
         gap: 20
@@ -234,8 +270,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Helvetica'
     },
     spinner: {
-        width: 50,
-        height: 50
+        width: 15,
+        height: 15
     },
     imageContainer: {
 
@@ -281,6 +317,7 @@ const styles = StyleSheet.create({
     dataText: {
         color: Colors.white,
         fontSize: 20,
-        fontWeight: '500'
+        fontWeight: '500',
+
     }
 });

@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, ActivityIndicator, KeyboardAvoidingView, SafeAreaView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, SafeAreaView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { FIREBASE_AUTH } from '../../firebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Colors from '../../assets/Shared/Colors';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 
-const Login = ({ navigation }) => {
+type LoginScreenProps = {
+  navigation: NavigationProp<ParamListBase>;
+};
+
+const Login: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,7 +32,7 @@ const Login = ({ navigation }) => {
     return true;
   };
 
-  const validatePassword = (inputPassword: string | any[]) => {
+  const validatePassword = (inputPassword: string) => {
     if (!inputPassword) {
       setPasswordError('Password is required');
       return false;
@@ -45,7 +52,6 @@ const Login = ({ navigation }) => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // Navigate to home screen after successful login
       navigation.navigate('Home');
     } catch (error: any) {
       setError('Sign in failed: ' + error.message);
@@ -62,7 +68,6 @@ const Login = ({ navigation }) => {
     setLoading(true);
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      // Navigate to home screen after successful sign up
       navigation.navigate('Home');
     } catch (error: any) {
       setError('Sign up failed: ' + error.message);
@@ -77,26 +82,25 @@ const Login = ({ navigation }) => {
         <KeyboardAwareScrollView>
           <View style={styles.header}>
             <Image
-              source={{ uri: 'https://cdn.dribbble.com/users/4908/screenshots/1287478/smart-home-icon.gif' }}
+              source={require('../../assets/images/Lgoin/login.png')}
               style={styles.headerImg}
               alt='logo'
             />
             <Text style={styles.title}>Sign in to
-              <Text style={{ color: '#075eec' }}> House controle</Text>
+              <Text style={{ color: '#075eec' }}> Scap House</Text>
             </Text>
             <Text style={styles.subtitle}>Get access to your Home and more</Text>
           </View>
 
           <View style={styles.form}>
             <View style={emailError ? [styles.input, styles.inputError] : styles.input}>
-
               <Text style={styles.inputLabel}>Email address</Text>
               <TextInput
                 style={styles.inputControl}
                 autoCorrect={false}
                 keyboardType='email-address'
                 placeholder='danico@example.com'
-                placeholderTextColor='#577B8D'
+                placeholderTextColor='#577BB8'
                 autoCapitalize='none'
                 onChangeText={(text) => setEmail(text)}
                 onBlur={() => validateEmail(email)}
@@ -105,12 +109,11 @@ const Login = ({ navigation }) => {
             </View>
 
             <View style={passwordError ? [styles.input, styles.inputError] : styles.input}>
-
               <Text style={styles.inputLabel}>Password</Text>
               <TextInput
                 style={styles.inputControl}
                 placeholder='**********'
-                placeholderTextColor='#577B8D'
+                placeholderTextColor='#577BB8'
                 secureTextEntry={true}
                 value={password}
                 autoCapitalize='none'
@@ -125,13 +128,12 @@ const Login = ({ navigation }) => {
               <>
                 <TouchableOpacity onPress={signIn}>
                   <View style={styles.btn}>
-                    <Text style={styles.btnText}>Sign in</Text>
+                    <Text style={styles.btnText}>Sign in </Text><AntDesign name='login' size={13} color={Colors.light_gray} style={styles.btnText} />
                   </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ marginTop: 'auto' }} onPress={signUp}>
+                <TouchableOpacity style={{ marginTop: 20 }} onPress={signUp}>
                   <Text style={styles.formFooter}>Create your Account</Text>
-
                 </TouchableOpacity>
 
                 {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -169,8 +171,8 @@ const styles = StyleSheet.create({
     marginVertical: 36,
   },
   headerImg: {
-    width: 80,
-    height: 80,
+    width: 250,
+    height: 250,
     alignSelf: 'center',
     marginBottom: 36,
   },

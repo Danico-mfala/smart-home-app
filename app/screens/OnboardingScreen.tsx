@@ -39,12 +39,11 @@ const OnboardingScreen: React.FC = () => {
                                     autoPlay
                                     loop
                                     style={styles.lottie}
-
                                 />
                             </View>
                         ),
-                        title: 'Onboarding 1',
-                        subtitle: 'This is the first onboarding screen',
+                        title: 'Control Your Home',
+                        subtitle: 'Manage your home\'s IoT devices with ease.',
                     },
                     {
                         backgroundColor: '#fef3c7',
@@ -58,8 +57,8 @@ const OnboardingScreen: React.FC = () => {
                                 />
                             </View>
                         ),
-                        title: 'Onboarding 2',
-                        subtitle: 'This is the second onboarding screen',
+                        title: 'Sustainability First',
+                        subtitle: 'Reduce energy consumption and promote sustainability.',
                     },
                     {
                         backgroundColor: '#a78bfa',
@@ -73,12 +72,13 @@ const OnboardingScreen: React.FC = () => {
                                 />
                             </View>
                         ),
-                        title: 'Onboarding 3',
-                        subtitle: 'This is the third onboarding screen',
+                        title: 'Smart Living',
+                        subtitle: 'Experience the convenience of smart living solutions.',
                     },
                 ]}
             />
         </View>
+
     );
 };
 

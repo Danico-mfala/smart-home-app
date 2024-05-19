@@ -1,18 +1,15 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Profile from '../screens/Profile';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
 import Colors from '../../assets/Shared/Colors';
 import { FIREBASE_AUTH } from '../../firebaseConfig';
 
-interface RouterProps {
+interface HeaderProps {
     navigation: NavigationProp<any, any>;
 }
 
-export default function Header({ navigation }: RouterProps) {
-
-
+const Header: React.FC<HeaderProps> = ({ navigation }) => {
     const handleLogout = async () => {
         try {
             await FIREBASE_AUTH.signOut();
@@ -22,6 +19,7 @@ export default function Header({ navigation }: RouterProps) {
             console.error('Error signing out:', error);
         }
     };
+
     return (
         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <View style={{ display: 'flex', flexDirection: 'row', gap: 10, alignItems: 'center' }}>
@@ -41,10 +39,11 @@ export default function Header({ navigation }: RouterProps) {
             </View>
             <View>
                 <TouchableOpacity onPress={handleLogout}>
-                    <AntDesign name='setting' size={30} color={Colors.light_gray} />
+                    <MaterialIcons name='logout' size={30} color={Colors.light_gray} />
                 </TouchableOpacity>
             </View>
         </View>
+    );
+};
 
-    )
-}
+export default Header;
