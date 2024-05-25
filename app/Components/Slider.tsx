@@ -6,7 +6,7 @@ export default function Slider() {
         {
             id: 1,
             name: 'Home',
-            imageUrl: 'https://iotbusinessnews.com/WordPress/wp-content/uploads/2023/01/iot-for-smart-homes.jpg'
+            imageUrl: 'https://www.glitched.online/wp-content/uploads/2022/02/Glitched-Smart-Home-Wishlist-15.jpg'
         },
         {
             id: 2,
@@ -20,12 +20,13 @@ export default function Slider() {
             <FlatList
                 data={sliderList}
                 horizontal={true}
-                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+
                 renderItem={({ item }) => (
                     <Image source={{ uri: item.imageUrl }}
                         style={{
                             width: Dimensions.get('window').width * 0.9,
-                            height: 170,
+                            height: 175,
                             borderRadius: 10,
                             margin: 2
                         }}

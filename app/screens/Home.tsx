@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { FIREBASE_AUTH } from '../../firebaseConfig';
 import Details from './Details';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import Colors from '../../assets/Shared/Colors';
 import Profile from '../screens/Profile';
 import Header from '../Components/Header';
 import Slider from '../Components/Slider';
@@ -18,20 +18,22 @@ interface RouterProps {
 
 const Home: React.FC<RouterProps> = ({ navigation }) => {
   return (
-    <View style={{ padding: 10, margin: 10, marginTop: 50 }}>
-      <Header navigation={navigation} />
-      <Slider />
-      <Categories />
-      <SubHeadung />
-      <Button onPress={() => navigation.navigate('Details')} title="Details page" />
-      <Button onPress={async () => {
-        try {
-          await FIREBASE_AUTH.signOut();
-          navigation.navigate('Login');
-        } catch (error) {
-          console.error('Error signing out:', error);
-        }
-      }} title="Logout" />
+    <View style={{ marginTop: 40, backgroundColor: 'transparent', height: 'auto' }}>
+      <View style={{ padding: 10 }}>
+        <Header navigation={navigation} />
+        <Slider />
+        <Categories />
+        <SubHeadung />
+        {/* <Button onPress={() => navigation.navigate('Details')} title="Details page" />
+        <Button onPress={async () => {
+          try {
+            await FIREBASE_AUTH.signOut();
+            navigation.navigate('Login');
+          } catch (error) {
+            console.error('Error signing out:', error);
+          }
+        }} title="Logout" /> */}
+      </View>
     </View>
   );
 };

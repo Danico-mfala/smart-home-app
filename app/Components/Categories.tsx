@@ -8,7 +8,7 @@ export default function Categories() {
         {
             id: 1,
             name: 'water',
-            imageUrl: 'https://cdn.icon-icons.com/icons2/2738/PNG/512/glass_fill_water_icon_175790.png'
+            imageUrl: 'https://www.freeiconspng.com/thumbs/water-services-icon/water-services-icon-11.png'
         },
         {
             id: 2,
@@ -16,17 +16,23 @@ export default function Categories() {
             imageUrl: 'https://as1.ftcdn.net/v2/jpg/05/50/51/74/1000_F_550517478_pqKOUpiR65GgyuCvld9Stag97lkPwjdA.jpg'
         }, {
             id: 3,
-            name: 'Panosolar',
-            imageUrl: 'https://as1.ftcdn.net/v2/jpg/05/50/51/74/1000_F_550517478_pqKOUpiR65GgyuCvld9Stag97lkPwjdA.jpg'
+            name: 'Camera',
+            imageUrl: 'https://img.myloview.com.br/posters/surveillance-camera-or-security-camera-icon-logo-design-black-symbol-isolated-on-white-background-vector-eps-10-700-199226731.jpg'
         }, {
             id: 4,
-            name: 'Panosolar',
-            imageUrl: 'https://as1.ftcdn.net/v2/jpg/05/50/51/74/1000_F_550517478_pqKOUpiR65GgyuCvld9Stag97lkPwjdA.jpg'
+            name: 'Energy',
+            imageUrl: 'https://static.thenounproject.com/png/528236-200.png'
         }
     ]
     return (
         <View style={{ marginTop: 20 }}>
-            <Text>Devices</Text>
+            <Text style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                color: Colors.primary,
+                marginBottom: 5,
+
+            }}>Controle</Text>
 
             <FlatList
                 data={catList}
@@ -40,7 +46,7 @@ export default function Categories() {
                 renderItem={({ item }) => (
                     <View style={{ alignItems: 'center', gap: 5 }}>
                         <View style={{
-                            backgroundColor: Colors.secondery,
+                            backgroundColor: Colors.white,
                             borderRadius: 99,
 
                         }}>
@@ -53,7 +59,11 @@ export default function Categories() {
                             />
 
                         </View>
-                        <Text>{item.name}</Text>
+                        <Text style={{
+                            fontSize: 14,
+                            fontWeight: '500',
+                            color: Colors.primary
+                        }}>{item.name}</Text>
                     </View>
                 )
                 }

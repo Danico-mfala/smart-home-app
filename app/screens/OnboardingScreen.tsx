@@ -46,11 +46,11 @@ const OnboardingScreen: React.FC = () => {
                         subtitle: 'Manage your home\'s IoT devices with ease.',
                     },
                     {
-                        backgroundColor: '#fef3c7',
+                        backgroundColor: 'white',
                         image: (
                             <View style={styles.LottieView}>
                                 <Lottie
-                                    source={require('../../assets/annimation/Animation2.json')}
+                                    source={require('../../assets/annimation/Animation4.json')}
                                     autoPlay
                                     loop
                                     style={styles.lottie}
